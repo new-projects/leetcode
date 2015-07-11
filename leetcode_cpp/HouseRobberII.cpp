@@ -19,26 +19,24 @@ public:
         if (n <= 1) {
             return nums[0];
         }
-        vector<vector<int>> dp(n, vector<int>(2));
+        vector<int> dp(n);
         int ans = 0;
 
         // case 1: nums[0] is taken
-        dp[0][1] = nums[0];
-        dp[1][0] = dp[0][1];
-        dp[1][1] = 0;
+        dp[0] = nums[0];
+        dp[1] = nums[0];
         for (int i = 2; i < n; ++i) {
-            dp[i][0] = max(dp[i - 1][0], dp[i - 1][1]);
-            dp[i][1] = dp[i - 1][0] + nums[i];
+            dp[i] = max(dp[i - 1], dp[i - 2] + nums[i]);
         }
-        ans = dp[n - 1][0];
+        ans = dp[n - 2];
 
         // case 2: nums[0] is not taken
-        dp = vector<vector<int>>(n, vector<int>(2));
-        for (int i = 1; i < n; ++i) {
-            dp[i][0] = max(dp[i - 1][0], dp[i - 1][1]);
-            dp[i][1] = dp[i - 1][0] + nums[i];
+        dp[0] = 0;
+        dp[1] = nums[1];
+        for (int i = 2; i < n; ++i) {
+            dp[i] = max(dp[i - 1], dp[i - 2] + nums[i]);
         }
-        ans = max(ans, max(dp[n - 1][0], dp[n - 1][1]));
+        ans = max(ans, dp[n - 1]);
         return ans;
     }
 };
