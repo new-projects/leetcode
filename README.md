@@ -1,3 +1,3 @@
 # leetcode
-Leetcode solution
+Leetcode Solution
 Java and C++ versions
